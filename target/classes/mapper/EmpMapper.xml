@@ -1,0 +1,118 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.itheima.mapper.EmpMapper">
+    <!-- 员工结果集映射, 包含工作经历集合 -->
+    <resultMap id="EmpResultMap" type="com.itheima.entity.Emp">
+        <id property="id" column="id"/>
+        <result property="username" column="username"/>
+        <result property="password" column="password"/>
+        <result property="name" column="name"/>
+        <result property="gender" column="gender"/>
+        <result property="phone" column="phone"/>
+        <result property="job" column="job"/>
+        <result property="salary" column="salary"/>
+        <result property="image" column="image"/>
+        <result property="entryDate" column="entry_date"/>
+        <result property="deptId" column="dept_id"/>
+        <result property="createTime" column="create_time"/>
+        <result property="updateTime" column="update_time"/>
+        <result property="deptName" column="deptName"/>
+
+        <!-- 一对多：工作经历集合 -->
+        <collection property="exprList" ofType="com.itheima.entity.EmpExpr">
+            <id property="id" column="expr_id"/>
+            <result property="empId" column="expr_emp_id"/>
+            <result property="begin" column="expr_begin"/>
+            <result property="end" column="expr_end"/>
+            <result property="company" column="expr_company"/>
+            <result property="job" column="expr_job"/>
+        </collection>
+    </resultMap>
+
+    <!-- 分页查询员工信息 -->
+    <select id="pageSelect" resultType="com.itheima.entity.Emp">
+        select e.*, d.name as deptName
+        from emp e
+                 left join dept d on e.dept_id = d.id
+        <where>
+            <if test="empQueryDTO.name != null and empQueryDTO.name != ''">
+                e.name like ('%' #{empQueryDTO.name} '%')
+            </if>
+            <if test="empQueryDTO.gender == 1">
+                and e.gender = #{empQueryDTO.gender}
+            </if>
+            <if test="empQueryDTO.gender == 2">
+                and e.gender = #{empQueryDTO.gender}
+            </if>
+            <if test="empQueryDTO.begin != null and empQueryDTO.end != null">
+                and e.entry_date between #{empQueryDTO.begin} and #{empQueryDTO.end}
+            </if>
+        </where>
+    </select>
+
+    <!-- 批量删除员工信息 -->
+    <delete id="deleteByIds">
+        delete
+        from emp where id in
+        <foreach collection="ids" item="id" open="(" separator="," close=")">
+            #{id}
+        </foreach>
+    </delete>
+
+    <!-- 添加员工信息 -->
+    <insert id="addEmp" useGeneratedKeys="true" keyProperty="emp.id">
+        insert into emp(username, password, name, gender, phone, job, salary, image, entry_date, dept_id, create_time,
+                        update_time)
+        values (#{emp.username}, #{emp.password}, #{emp.name}, #{emp.gender}, #{emp.phone}, #{emp.job}, #{emp.salary},
+                #{emp.image}, #{emp.entryDate}, #{emp.deptId}, #{emp.createTime}, #{emp.updateTime})
+    </insert>
+
+    <!-- 根据员工Id查询员工信息和工作经历 -->
+    <select id="selectById" resultMap="EmpResultMap">
+        select e.*,
+               d.name     as deptName,
+               ee.id      as expr_id,
+               ee.emp_id  as expr_emp_id,
+               ee.begin   as expr_begin,
+               ee.end     as expr_end,
+               ee.company as expr_company,
+               ee.job     as expr_job
+        from emp e
+                 left join dept d on e.dept_id = d.id
+                 left join emp_expr ee on e.id = ee.emp_id
+        where e.id = #{id}
+    </select>
+
+    <!-- 根据员工Id更新员工信息 -->
+    <update id="updateById">
+        update emp
+        set username    = #{emp.username},
+            name        = #{emp.name},
+            gender      = #{emp.gender},
+            phone       = #{emp.phone},
+            job         = #{emp.job},
+            salary      = #{emp.salary},
+            image       = #{emp.image},
+            dept_id     = #{emp.deptId},
+            entry_date  = #{emp.entryDate},
+            update_time = #{emp.updateTime}
+        where id = #{emp.id}
+    </update>
+
+    <!-- 查询所有员工信息 -->
+    <select id="selectAllList" resultMap="EmpResultMap">
+        select e.*,
+               d.name     as deptName,
+               ee.id      as expr_id,
+               ee.emp_id  as expr_emp_id,
+               ee.begin   as expr_begin,
+               ee.end     as expr_end,
+               ee.company as expr_company,
+               ee.job     as expr_job
+        from emp e
+                 left join dept d on e.dept_id = d.id
+                 left join emp_expr ee on e.id = ee.emp_id
+    </select>
+</mapper>
