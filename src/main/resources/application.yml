@@ -20,4 +20,7 @@ pagehelper:
 logging:
   level:
     org.springframework.jdbc.support.JdbcTransactionManager: debug
-aliyun
+aliyun:
+  oss:
+    bucket-name: ai-175  # 桶名称
+    end-point: https://oss-cn-shanghai.aliyuncs.com # 路径节点地址

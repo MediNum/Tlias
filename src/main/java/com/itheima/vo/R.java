@@ -34,7 +34,7 @@ public class R {
      *
      * @return 表示失败的R对象(不携带data数据)
      */
-    public static R error() {
-        return R.builder().code(0).mes("Error").build();
+    public static R error(String message) {
+        return R.builder().code(0).mes(message).build();
     }
 }

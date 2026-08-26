@@ -86,7 +86,7 @@ public class EmpService implements IEmpService {
         // 设置修改时间
         emp.setUpdateTime(LocalDateTime.now());
         // 设置默认头像
-        emp.setImage("https://storage.360buyimg.com/i.imageUpload/beadb5e434303031353234393235353235373736_big.jpg");
+        // emp.setImage("https://storage.360buyimg.com/i.imageUpload/beadb5e434303031353234393235353235373736_big.jpg");
         // 添加员工信息
         empMapper.addEmp(emp);
 
