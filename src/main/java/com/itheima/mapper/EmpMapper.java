@@ -56,4 +56,11 @@ public interface EmpMapper {
      * @return
      */
     List<Emp> selectAllList();
+
+    /**
+     * 根据用户名查询员工信息是否重复
+     * @param username
+     * @return
+     */
+    Integer selectByUsername(@Param("username") String username);
 }

@@ -115,4 +115,9 @@
                  left join dept d on e.dept_id = d.id
                  left join emp_expr ee on e.id = ee.emp_id
     </select>
+
+    <!-- 根据用户名查询员工信息 -->
+    <select id="selectByUsername" resultType="java.lang.Integer">
+        select count(*) from emp where username = #{username}
+    </select>
 </mapper>

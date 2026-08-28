@@ -8,7 +8,7 @@ import lombok.Data;
 public class R {
 
     private Integer code; // 1 成功 , 0 失败
-    private String mes; // 响应信息
+    private String msg; // 响应信息
     private Object data; // 响应数据 , 如果有数据则封装给data, 如果没有数据则data为null
 
     /**
@@ -17,7 +17,7 @@ public class R {
      * @return 表示成功的R对象(不携带data数据)
      */
     public static R ok() {
-        return R.builder().code(1).mes("Success").build();
+        return R.builder().code(1).msg("Success").build();
     }
 
     /**
@@ -26,7 +26,7 @@ public class R {
      * @return 表示成功的R对象(携带data数据)
      */
     public static R ok(Object data) {
-        return R.builder().code(1).mes("Success").data(data).build();
+        return R.builder().code(1).msg("Success").data(data).build();
     }
 
     /**
@@ -35,6 +35,6 @@ public class R {
      * @return 表示失败的R对象(不携带data数据)
      */
     public static R error(String message) {
-        return R.builder().code(0).mes(message).build();
+        return R.builder().code(0).msg(message).build();
     }
 }

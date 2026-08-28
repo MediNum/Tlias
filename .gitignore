@@ -1,0 +1,11 @@
+/src/test/
+/target
+/.idea
+/.classpath
+/.project
+/.settings
+/gradle
+/build
+/node_modules
+/dist
+/.qoderignore

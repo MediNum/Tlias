@@ -7,6 +7,7 @@ import com.github.pagehelper.PageInfo;
 import com.itheima.dto.EmpQueryDTO;
 import com.itheima.entity.Emp;
 import com.itheima.entity.EmpExpr;
+import com.itheima.exception.BusinessException;
 import com.itheima.mapper.EmpMapper;
 import com.itheima.service.IEmpExprService;
 import com.itheima.service.IEmpService;
@@ -87,6 +88,13 @@ public class EmpService implements IEmpService {
         emp.setUpdateTime(LocalDateTime.now());
         // 设置默认头像
         // emp.setImage("https://storage.360buyimg.com/i.imageUpload/beadb5e434303031353234393235353235373736_big.jpg");
+        // 判断员工用户名是否重复
+        log.info("===>用户信息{}", emp.getUsername());
+        Integer empCount = empMapper.selectByUsername(emp.getUsername());
+        log.info("===>查询到重复的用户信息数{}", empCount);
+        if (empCount != null && empCount > 0) {
+            throw new BusinessException("用户名已存在, 请重新输入");
+        }
         // 添加员工信息
         empMapper.addEmp(emp);
 
