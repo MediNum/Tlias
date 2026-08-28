@@ -1,11 +1,95 @@
-/src/test/
-/target
-/.idea
+# ============================================
+#  Java / Maven 构建产物
+# ============================================
+target/
+*.class
+*.jar
+*.war
+*.ear
+*.zip
+*.tar.gz
+*.rar
+
+# Maven 临时/备份文件
+pom.xml.tag
+pom.xml.releaseBackup
+pom.xml.versionsBackup
+pom.xml.next
+release.properties
+dependency-reduced-pom.xml
+buildNumber.properties
+.mvn/timing.properties
+.mvn/wrapper/maven-wrapper.jar
+
+# ============================================
+#  IntelliJ IDEA
+# ============================================
+/.idea/
+*.iml
+*.iws
+*.ipr
+out/
+
+# ============================================
+#  Eclipse
+# ============================================
 /.classpath
 /.project
-/.settings
-/gradle
-/build
-/node_modules
-/dist
-/.qoderignore
+/.settings/
+bin/
+
+# ============================================
+#  NetBeans
+# ============================================
+/nbproject/private/
+/nbbuild/
+/dist/
+/nbdist/
+/.nb-gradle/
+
+# ============================================
+#  Node.js / 前端（本项目暂未使用，保留以备扩展）
+# ============================================
+node_modules/
+.next/
+.nuxt/
+.output/
+coverage/
+.eslintcache
+*.tsbuildinfo
+
+# ============================================
+#  测试产物（保留 src/test 下的源码）
+# ============================================
+**/test-output/
+**/test-results/
+**/surefire-reports/
+**/failsafe-reports/
+**/jacoco/
+**/*.exec
+
+# ============================================
+#  操作系统 / 编辑器
+# ============================================
+.DS_Store
+Thumbs.db
+Desktop.ini
+.vscode/
+*.swp
+*.swo
+*~
+
+# ============================================
+#  环境变量 / 敏感信息 / 日志
+# ============================================
+.env
+.env.*
+!.env.example
+*.log
+*.pid
+*.seed
+
+# ============================================
+#  项目特定
+# ============================================
+.qoderignore
