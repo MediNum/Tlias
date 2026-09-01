@@ -64,6 +64,9 @@
     </update>
 
     <select id="clazzListAll" resultMap="clazzMap">
-        select * from clazz
+        select
+            id , name
+        from
+            clazz
     </select>
 </mapper>

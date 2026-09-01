@@ -1,0 +1,41 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.itheima.mapper.StuMapper">
+
+    <!-- 映射文件 -->
+    <resultMap id="stuMap" type="com.itheima.entity.Stu">
+        <id property="id" column="id"/>
+        <result property="name" column="name"/>
+        <result property="no" column="no"/>
+        <result property="gender" column="gender"/>
+        <result property="phone" column="phone"/>
+        <result property="idCard" column="id_card"/>
+        <result property="isCollege" column="is_college"/>
+        <result property="address" column="address"/>
+        <result property="degree" column="degree"/>
+        <result property="graduationDate" column="graduation_date"/>
+        <result property="clazzId" column="clazz_id"/>
+        <result property="violationCount" column="violation_count"/>
+        <result property="violationScore" column="violation_score"/>
+        <result property="createTime" column="create_time"/>
+        <result property="updateTime" column="update_time"/>
+        <result property="clazzName" column="clazzName"/>
+    </resultMap>
+
+    <select id="studentList" resultMap="stuMap">
+        select s.*, c.name as clazzName from student s left join clazz c on c.id = s.clazz_id
+        <where>
+            <if test="studentQueryDTO.name != null and studentQueryDTO.name != ''">
+                s.name like concat('%',#{studentQueryDTO.name},'%')
+            </if>
+            <if test="studentQueryDTO.degree != null">
+                and s.degree = #{studentQueryDTO.degree}
+            </if>
+            <if test="studentQueryDTO.clazzId != null">
+                and s.clazz_id = #{studentQueryDTO.clazzId}
+            </if>
+        </where>
+    </select>
+</mapper>

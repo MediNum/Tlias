@@ -96,7 +96,8 @@ public class ClazzController {
     public R clazzListAll() {
         List<Clazz> clazzListInfo = clazzService.clazzListAll();
         log.info("查询所有班级信息,clazzListInfo:{}", clazzListInfo);
-        return R.ok(clazzListInfo);
+         return R.ok(clazzListInfo);
+        // return R.ok();
     }
 }
 
