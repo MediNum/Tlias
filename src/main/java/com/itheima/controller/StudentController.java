@@ -1,14 +1,15 @@
 package com.itheima.controller;
 
 import com.itheima.dto.StudentQueryDTO;
+import com.itheima.entity.Stu;
 import com.itheima.service.IStuService;
 import com.itheima.vo.PageR;
 import com.itheima.vo.R;
 import jakarta.annotation.Resource;
 import lombok.extern.slf4j.Slf4j;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
+
+import java.util.List;
 
 /**
  * 学生管理控制器
@@ -34,4 +35,27 @@ public class StudentController {
         return R.ok(pageR);
     }
 
+    /**
+     * 删除学员信息
+     * @param ids
+     * @return
+     */
+    @DeleteMapping("/{ids}")
+    public R deleteByIds(@PathVariable List<Integer> ids) {
+        log.info("==> 删除学员信息 {}", ids);
+        stuService.deleteByIds(ids);
+        return R.ok();
+    }
+
+    /**
+     * 新增员工信息
+     * @param stu
+     * @return
+     */
+    @PostMapping
+    public R addStudent(@RequestBody Stu stu) {
+        log.info("==>新增的学员的信息为 {}", stu);
+        stuService.addStudentInfo(stu);
+        return R.ok();
+    }
 }

@@ -16,7 +16,7 @@ import java.time.LocalDate;
 @AllArgsConstructor
 public class Stu {
 
-    private Integer id; //
+    private Integer id; // id
     private String name; // 姓名
     private String no; // 学号
     private Integer gender; // 性别 , 1: 男 , 2 : 女

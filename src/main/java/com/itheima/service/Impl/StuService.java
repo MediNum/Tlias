@@ -10,6 +10,7 @@ import com.itheima.vo.PageR;
 import jakarta.annotation.Resource;
 import org.springframework.stereotype.Service;
 
+import java.time.LocalDate;
 import java.util.List;
 
 /**
@@ -40,5 +41,29 @@ public class StuService implements IStuService {
                 .total(PageInfo.getTotal())
                 .rows(PageInfo.getList())
                 .build();
+    }
+
+    /**
+     * 根据id删除学生
+     *
+     * @param ids
+     */
+    @Override
+    public void deleteByIds(List<Integer> ids) {
+        stuMapper.deleteByIds(ids);
+    }
+
+    /**
+     * 新增员工信息
+     *
+     * @param stu
+     */
+    @Override
+    public void addStudentInfo(Stu stu) {
+        // 设置创建时间
+        stu.setCreateTime(LocalDate.now());
+        // 设置更新时间
+        stu.setUpdateTime(LocalDate.now());
+        stuMapper.addStudentInfo(stu);
     }
 }

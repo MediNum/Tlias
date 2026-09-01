@@ -19,4 +19,16 @@ public interface StuMapper {
      * @return
      */
     List<Stu> studentList(@Param("studentQueryDTO") StudentQueryDTO studentQueryDTO);
+
+    /**
+     * 根据id删除学生
+     * @param ids
+     */
+    void deleteByIds(@Param("ids") List<Integer> ids);
+
+    /**
+     * 添加学生信息
+     * @param stu
+     */
+    void addStudentInfo(@Param("stu") Stu stu);
 }
