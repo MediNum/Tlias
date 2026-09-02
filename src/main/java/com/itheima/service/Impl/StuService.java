@@ -1,6 +1,7 @@
 package com.itheima.service.Impl;
 
 import cn.hutool.core.util.ObjectUtil;
+import cn.hutool.core.util.StrUtil;
 import com.github.pagehelper.PageHelper;
 import com.github.pagehelper.PageInfo;
 import com.itheima.dto.StudentQueryDTO;
@@ -12,6 +13,7 @@ import com.itheima.vo.PageR;
 import jakarta.annotation.Resource;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 import java.time.LocalDate;
 import java.util.List;
@@ -111,5 +113,35 @@ public class StuService implements IStuService {
         // 更新修改时间
         stu.setUpdateTime(LocalDate.now());
         stuMapper.updateStuInfo(stu);
+    }
+
+    /**
+     * 学员违纪扣分
+     *
+     * @param id
+     * @param scoreStr
+     */
+    @Override
+    @Transactional(rollbackFor = Exception.class)
+    public void updateStuScore(Integer id, String scoreStr) {
+        if (ObjectUtil.isEmpty(id)) {
+            throw new BusinessException("无法获取学员信息!");
+        }
+        // 判断1:是否为空/纯空格
+        if (StrUtil.isBlank(scoreStr)) {
+            throw new BusinessException("扣分不能为空");
+        }
+        // 判断2:是否为非数字(正则:只能是纯数字,不能含有字母/符号/小数点)
+        if (!scoreStr.matches("\\d+")) {
+            throw new BusinessException("扣分必须为正整数,不能包含字母或符号");
+        }
+        // 通过校验后在转换为数字,并作范围判断
+        int score = Integer.parseInt(scoreStr);
+        if (score > 0 && score <= 100) {
+            stuMapper.updateStuCount(id);
+            stuMapper.updateStuScore(id,score);
+        } else {
+            throw new BusinessException("请输入正确的违纪扣分");
+        }
     }
 }

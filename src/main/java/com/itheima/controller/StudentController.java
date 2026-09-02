@@ -88,4 +88,16 @@ public class StudentController {
         return R.ok();
     }
 
+    /**
+     * 学员违纪扣分
+     * @param id
+     * @param score
+     * @return
+     */
+    @PutMapping("/violation/{id}/{score}")
+    public R updateStuScore(@PathVariable Integer id , @PathVariable String score) {
+        log.info("==>获取到的id为 {} , 扣减的分数为 {}" , id , score);
+        stuService.updateStuScore(id,score);
+        return R.ok();
+    }
 }

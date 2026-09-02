@@ -106,4 +106,18 @@
             update_time     = #{stu.updateTime}
         where id = #{stu.id}
     </update>
+
+    <!-- 学员违纪扣分 -->
+    <update id="updateStuScore">
+        update student
+        set violation_score = violation_score + #{score}
+        where id = #{id}
+    </update>
+
+    <!-- 员违纪次数统计(同步自增) -->
+    <update id="updateStuCount">
+        update student
+        set violation_count = violation_count + 1
+        where id = #{id}
+    </update>
 </mapper>

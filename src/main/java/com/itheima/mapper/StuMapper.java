@@ -57,4 +57,18 @@ public interface StuMapper {
      * @param stu
      */
     void updateStuInfo(@Param("stu") Stu stu);
+
+    /**
+     * 学员违纪扣分
+     *
+     * @param id
+     * @param score
+     */
+    void updateStuScore(@Param("id") Integer id,@Param("score") Integer score);
+
+    /**
+     * 学员违纪次数统计(同步自增)
+     * @param id
+     */
+    void updateStuCount(@Param("id") Integer id);
 }

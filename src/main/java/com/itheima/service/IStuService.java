@@ -41,4 +41,12 @@ public interface IStuService {
      * @param stu
      */
     void updateStuInfo(Stu stu);
+
+    /**
+     * 学员违纪扣分
+     *
+     * @param id
+     * @param scoreStr
+     */
+    void updateStuScore(Integer id, String scoreStr);
 }
