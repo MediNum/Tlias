@@ -26,4 +26,12 @@ public interface IStuService {
      * @param stu
      */
     void addStudentInfo(Stu stu);
+
+    /**
+     * 根据ID查询学员信息
+     *
+     * @param id
+     * @return
+     */
+    Stu selectById(Integer id);
 }

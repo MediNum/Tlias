@@ -1,5 +1,6 @@
 package com.itheima.service.Impl;
 
+import cn.hutool.core.util.ObjectUtil;
 import com.github.pagehelper.PageHelper;
 import com.github.pagehelper.PageInfo;
 import com.itheima.dto.StudentQueryDTO;
@@ -85,5 +86,18 @@ public class StuService implements IStuService {
             throw new BusinessException("学号已存在,请勿重复添加");
         }
         stuMapper.addStudentInfo(stu);
+    }
+
+    /**
+     * 根据ID查询学员信息
+     *
+     * @param id
+     * @return
+     */
+    @Override
+    public Stu selectById(Integer id) {
+        if (ObjectUtil.isEmpty(id))
+            return null;
+        return stuMapper.selectById(id);
     }
 }

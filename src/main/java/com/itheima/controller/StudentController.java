@@ -25,18 +25,20 @@ public class StudentController {
 
     /**
      * 学生列表查询
+     *
      * @param studentQueryDTO
      * @return
      */
     @GetMapping
     public R StudentList(StudentQueryDTO studentQueryDTO) {
-        log.info("==>查询的学生信息 {} " , studentQueryDTO);
+        log.info("==>查询的学生信息 {} ", studentQueryDTO);
         PageR pageR = stuService.studentList(studentQueryDTO);
         return R.ok(pageR);
     }
 
     /**
      * 删除学员信息
+     *
      * @param ids
      * @return
      */
@@ -49,6 +51,7 @@ public class StudentController {
 
     /**
      * 新增学员信息
+     *
      * @param stu
      * @return
      */
@@ -59,5 +62,17 @@ public class StudentController {
         return R.ok();
     }
 
+    /**
+     * 根据ID查询学员信息
+     *
+     * @param id
+     * @return
+     */
+    @GetMapping("/{id}")
+    public R selectById(@PathVariable("id") Integer id) {
+        log.info("==>需要查询的学生Id {} ", id);
+        Stu stuInfo = stuService.selectById(id);
+        return R.ok(stuInfo);
+    }
 
 }
