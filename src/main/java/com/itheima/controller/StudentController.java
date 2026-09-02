@@ -48,7 +48,7 @@ public class StudentController {
     }
 
     /**
-     * 新增员工信息
+     * 新增学员信息
      * @param stu
      * @return
      */
@@ -58,4 +58,6 @@ public class StudentController {
         stuService.addStudentInfo(stu);
         return R.ok();
     }
+
+
 }
