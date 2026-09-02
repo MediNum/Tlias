@@ -22,7 +22,7 @@ public interface IStuService {
     void deleteByIds(List<Integer> ids);
 
     /**
-     *新增员工信息
+     *新增学员信息
      * @param stu
      */
     void addStudentInfo(Stu stu);

@@ -92,7 +92,7 @@ public class EmpService implements IEmpService {
         log.info("===>用户信息{}", emp.getUsername());
         Integer empCount = empMapper.selectByUsername(emp.getUsername());
         log.info("===>查询到重复的用户信息数{}", empCount);
-        if (empCount != null && empCount > 0) {
+        if (empCount > 0) {
             throw new BusinessException("用户名已存在, 请重新输入");
         }
         // 添加员工信息

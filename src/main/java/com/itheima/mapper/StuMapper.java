@@ -31,4 +31,11 @@ public interface StuMapper {
      * @param stu
      */
     void addStudentInfo(@Param("stu") Stu stu);
+
+    /**
+     * 查询学员重复学号个数
+     * @param no
+     * @return
+     */
+    Integer selectStuNo(@Param("no") String no);
 }

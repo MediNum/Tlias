@@ -3,7 +3,6 @@
         PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
         "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="com.itheima.mapper.StuMapper">
-
     <!-- 映射文件 -->
     <resultMap id="stuMap" type="com.itheima.entity.Stu">
         <id property="id" column="id"/>
@@ -25,10 +24,12 @@
     </resultMap>
 
     <select id="studentList" resultMap="stuMap">
-        select s.*, c.name as clazzName from student s left join clazz c on c.id = s.clazz_id
+        select s.*, c.name as clazzName
+        from student s
+                 left join clazz c on c.id = s.clazz_id
         <where>
             <if test="studentQueryDTO.name != null and studentQueryDTO.name != ''">
-                s.name like concat('%',#{studentQueryDTO.name},'%')
+                s.name like concat('%', #{studentQueryDTO.name}, '%')
             </if>
             <if test="studentQueryDTO.degree != null">
                 and s.degree = #{studentQueryDTO.degree}
@@ -41,7 +42,8 @@
 
     <!-- 批量删除学员信息 -->
     <delete id="deleteByIds">
-        delete from student where id in
+        delete
+        from student where id in
         <foreach collection="ids" item="id" open="(" separator="," close=")">
             #{id}
         </foreach>
@@ -49,8 +51,16 @@
 
     <!-- 添加学生信息 -->
     <insert id="addStudentInfo">
-        insert into
-            student(NAME, NO, GENDER, PHONE, ID_CARD, IS_COLLEGE, ADDRESS, DEGREE, GRADUATION_DATE, CLAZZ_ID, VIOLATION_COUNT, VIOLATION_SCORE, CREATE_TIME, UPDATE_TIME)
-        values (#{stu.name},#{stu.no},#{stu.gender},)
+        insert into student(NAME, NO, GENDER, PHONE, ID_CARD, IS_COLLEGE, ADDRESS, DEGREE, GRADUATION_DATE, CLAZZ_ID,
+                            VIOLATION_COUNT, VIOLATION_SCORE, CREATE_TIME, UPDATE_TIME)
+        values (#{stu.name}, #{stu.no}, #{stu.gender},#{stu.phone},#{stu.idCard},#{stu.isCollege},#{stu.address},#{stu.degree},#{stu.graduationDate},#{stu.clazzId},#{stu.violationCount},#{stu.violationScore},#{stu.createTime},
+                #{stu.updateTime})
     </insert>
+
+    <!-- 查询是否含有相同学号 -->
+    <select id="selectStuNo" resultType="java.lang.Integer">
+        select count(*)
+        from student
+        where no = #{no};
+    </select>
 </mapper>

@@ -4,10 +4,12 @@ import com.github.pagehelper.PageHelper;
 import com.github.pagehelper.PageInfo;
 import com.itheima.dto.StudentQueryDTO;
 import com.itheima.entity.Stu;
+import com.itheima.exception.BusinessException;
 import com.itheima.mapper.StuMapper;
 import com.itheima.service.IStuService;
 import com.itheima.vo.PageR;
 import jakarta.annotation.Resource;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Service;
 
 import java.time.LocalDate;
@@ -16,6 +18,7 @@ import java.util.List;
 /**
  * 学生业务逻辑实现类
  */
+@Slf4j
 @Service
 public class StuService implements IStuService {
 
@@ -54,7 +57,7 @@ public class StuService implements IStuService {
     }
 
     /**
-     * 新增员工信息
+     * 新增学员信息
      *
      * @param stu
      */
@@ -64,6 +67,23 @@ public class StuService implements IStuService {
         stu.setCreateTime(LocalDate.now());
         // 设置更新时间
         stu.setUpdateTime(LocalDate.now());
+        // 设置默认班级ID为0
+        stu.setClazzId(0);
+
+        // 违纪次数.违纪扣分设置默认值
+        if (stu.getViolationCount() == null) {
+            stu.setViolationCount((short)0);
+        }
+        if (stu.getViolationScore() == null) {
+            stu.setViolationScore((short)0);
+        }
+
+        log.info("==>获取到的用户名 {} " , stu.getNo());
+        // 判断学号是否重复,重复则抛出业务异常
+        Integer StuNum = stuMapper.selectStuNo(stu.getNo());
+        if (StuNum > 0) {
+            throw new BusinessException("学号已存在,请勿重复添加");
+        }
         stuMapper.addStudentInfo(stu);
     }
 }
