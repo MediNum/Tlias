@@ -50,4 +50,11 @@ public interface StuMapper {
      * @return
      */
     Stu selectById(@Param("id") Integer id);
+
+    /**
+     * 修改学员信息
+     *
+     * @param stu
+     */
+    void updateStuInfo(@Param("stu") Stu stu);
 }

@@ -34,4 +34,11 @@ public interface IStuService {
      * @return
      */
     Stu selectById(Integer id);
+
+    /**
+     *修改学员信息
+     *
+     * @param stu
+     */
+    void updateStuInfo(Stu stu);
 }

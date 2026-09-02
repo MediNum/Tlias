@@ -75,4 +75,17 @@ public class StudentController {
         return R.ok(stuInfo);
     }
 
+    /**
+     * 修改学员信息
+     *
+     * @param stu
+     * @return
+     */
+    @PutMapping
+    public R updateStu(@RequestBody Stu stu) {
+        log.info("==>修改的学员的信息为 {} " , stu);
+        stuService.updateStuInfo(stu);
+        return R.ok();
+    }
+
 }

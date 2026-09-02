@@ -100,4 +100,16 @@ public class StuService implements IStuService {
             return null;
         return stuMapper.selectById(id);
     }
+
+    /**
+     * 修改学员信息
+     *
+     * @param stu
+     */
+    @Override
+    public void updateStuInfo(Stu stu) {
+        // 更新修改时间
+        stu.setUpdateTime(LocalDate.now());
+        stuMapper.updateStuInfo(stu);
+    }
 }
