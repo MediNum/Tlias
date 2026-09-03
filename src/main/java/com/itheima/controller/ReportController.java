@@ -1,6 +1,7 @@
 package com.itheima.controller;
 
 import com.itheima.service.IReportService;
+import com.itheima.vo.JobStatistics;
 import com.itheima.vo.R;
 import jakarta.annotation.Resource;
 import lombok.extern.slf4j.Slf4j;
@@ -25,11 +26,24 @@ public class ReportController {
 
     /**
      * 员工性别统计
+     *
      * @return
      */
     @GetMapping("/empGenderData")
     public R EmpGenderStatistics() {
-        List<Map<String,Object>> genderStatistics = reportService.empGenderStatistics();
+        List<Map<String, Object>> genderStatistics = reportService.empGenderStatistics();
         return R.ok(genderStatistics);
+    }
+
+    /**
+     *
+     * 员工职位人数统计
+     *
+     * @return
+     */
+    @GetMapping("/empJobData")
+    public R EmpJpbStatistics() {
+        JobStatistics jobStatistics = reportService.empJobStatistics();
+        return R.ok(jobStatistics);
     }
 }
