@@ -86,10 +86,13 @@ public class EmpService implements IEmpService {
         emp.setCreateTime(LocalDateTime.now());
         // 设置更新时间
         emp.setUpdateTime(LocalDateTime.now());
-        // 设置默认头像
-        // emp.setImage("https://storage.360buyimg.com/i.imageUpload/beadb5e434303031353234393235353235373736_big.jpg");
-        log.info("===>用户信息{},用户的手机号{}", emp.getUsername(), emp.getPhone());
 
+        // 如果用户没有上传头像则设置默认头像
+        if (ObjectUtil.isEmpty(emp.getImage())) {
+            emp.setImage("https://storage.360buyimg.com/i.imageUpload/beadb5e434303031353234393235353235373736_big.jpg");
+        }
+        log.info("==============>用户信息 {}" ,emp);
+        log.info("===>用户信息{},用户的手机号{}", emp.getUsername(), emp.getPhone());
         // 判断员工用户名和手机号是否重复
         Emp empInfo = empMapper.selectByUsernameOrPhone(emp.getUsername(), emp.getPhone());
         log.info("===>查询到重复的用户信息数{}", empInfo);
@@ -100,7 +103,6 @@ public class EmpService implements IEmpService {
             }
             throw new BusinessException("手机号重复,请重新输入!");
         }
-
         // 添加员工信息
         empMapper.addEmp(emp);
 
