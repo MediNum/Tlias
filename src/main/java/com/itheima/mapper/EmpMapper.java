@@ -62,5 +62,5 @@ public interface EmpMapper {
      * @param username
      * @return
      */
-    Integer selectByUsername(@Param("username") String username);
+    Emp selectByUsernameOrPhone(@Param("username") String username ,@Param("phone") String phone);
 }

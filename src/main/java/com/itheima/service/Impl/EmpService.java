@@ -84,17 +84,23 @@ public class EmpService implements IEmpService {
         emp.setPassword("123456");
         // 设置创建时间
         emp.setCreateTime(LocalDateTime.now());
-        // 设置修改时间
+        // 设置更新时间
         emp.setUpdateTime(LocalDateTime.now());
         // 设置默认头像
         // emp.setImage("https://storage.360buyimg.com/i.imageUpload/beadb5e434303031353234393235353235373736_big.jpg");
-        // 判断员工用户名是否重复
-        log.info("===>用户信息{}", emp.getUsername());
-        Integer empCount = empMapper.selectByUsername(emp.getUsername());
-        log.info("===>查询到重复的用户信息数{}", empCount);
-        if (empCount != null) {
-            throw new BusinessException("用户名已存在, 请重新输入");
+        log.info("===>用户信息{},用户的手机号{}", emp.getUsername(), emp.getPhone());
+
+        // 判断员工用户名和手机号是否重复
+        Emp empInfo = empMapper.selectByUsernameOrPhone(emp.getUsername(), emp.getPhone());
+        log.info("===>查询到重复的用户信息数{}", empInfo);
+        if (empInfo != null) {
+            // 命中行用户名与本次输入相同 -> 用户名冲入,否则是手机号冲突
+            if (emp.getUsername().equals(empInfo.getUsername())) {
+                throw new BusinessException("用户名重复,请重新输入!");
+            }
+            throw new BusinessException("手机号重复,请重新输入!");
         }
+
         // 添加员工信息
         empMapper.addEmp(emp);
 
@@ -139,7 +145,7 @@ public class EmpService implements IEmpService {
             exprList.forEach(empExpr -> empExpr.setEmpId(emp.getId()));
         }
         log.info("更新的员工工作经历为：{}", exprList);
-        empExprService.updateById(emp.getId() , exprList);
+        empExprService.updateById(emp.getId(), exprList);
     }
 
     /**

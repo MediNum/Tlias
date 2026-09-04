@@ -126,7 +126,7 @@
     </select>
 
     <!-- 根据用户名查询员工信息 -->
-    <select id="selectByUsername" resultType="java.lang.Integer">
-        select 1 from emp where username = #{username} limit 1
+    <select id="selectByUsernameOrPhone" resultType="com.itheima.entity.Emp">
+        select id,username,phone from emp where username = #{username} or phone = #{phone} limit 1
     </select>
 </mapper>
