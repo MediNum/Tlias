@@ -3,6 +3,7 @@ package com.itheima.service.Impl;
 import com.itheima.mapper.ReportMapper;
 import com.itheima.service.IReportService;
 import com.itheima.vo.JobStatistics;
+import com.itheima.vo.StudentStatistics;
 import jakarta.annotation.Resource;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Service;
@@ -28,8 +29,7 @@ public class ReportService implements IReportService {
      */
     @Override
     public List<Map<String, Object>> empGenderStatistics() {
-        List<Map<String,Object>> genderList = reportMapper.empGenderStatistics();
-        return genderList;
+        return reportMapper.empGenderStatistics();
     }
 
     /**
@@ -45,6 +45,29 @@ public class ReportService implements IReportService {
         log.info("==>jobList列表 {}" , jobList);
         log.info("==>dataList列表 {}" , dataList);
         return JobStatistics.builder().jobList(jobList).dataList(dataList).build();
+    }
+
+    /**
+     * 学员学历统计
+     *
+     * @return
+     */
+    @Override
+    public List<Map<String, Object>> stuDegreeDataStatistics() {
+        return reportMapper.stuDegreeDataStatistics();
+    }
+
+    /**
+     * 学生人数统计
+     *
+     * @return
+     */
+    @Override
+    public StudentStatistics stuCountStatistics() {
+        List<Map<String,Object>> stuStatisticsList = reportMapper.stuCountStatistics();
+        List<String> clazzList = stuStatisticsList.stream().map(map -> map.get("name").toString()).collect(Collectors.toList());
+        List<Integer> dataList = stuStatisticsList.stream().map(map -> Integer.valueOf(map.get("count").toString())).collect(Collectors.toList());
+        return StudentStatistics.builder().clazzList(clazzList).dataList(dataList).build();
     }
 
 }

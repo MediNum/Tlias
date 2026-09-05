@@ -24,4 +24,18 @@ public interface ReportMapper {
      * @return
      */
     List<Map<String, Object>> empJobStatistics();
+
+    /**
+     * 学员学历统计
+     *
+     * @return
+     */
+    List<Map<String, Object>> stuDegreeDataStatistics();
+
+    /**
+     * 学生人数统计
+     *
+     * @return
+     */
+    List<Map<String, Object>> stuCountStatistics();
 }

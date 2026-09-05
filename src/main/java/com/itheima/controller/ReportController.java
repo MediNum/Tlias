@@ -3,6 +3,7 @@ package com.itheima.controller;
 import com.itheima.service.IReportService;
 import com.itheima.vo.JobStatistics;
 import com.itheima.vo.R;
+import com.itheima.vo.StudentStatistics;
 import jakarta.annotation.Resource;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -45,5 +46,27 @@ public class ReportController {
     public R EmpJpbStatistics() {
         JobStatistics jobStatistics = reportService.empJobStatistics();
         return R.ok(jobStatistics);
+    }
+
+    /**
+     * 学员学历统计
+     *
+     * @return
+     */
+    @GetMapping("/studentDegreeData")
+    public R stuDegreeDataStatistics() {
+        List<Map<String, Object>> DegreeStatistics = reportService.stuDegreeDataStatistics();
+        return R.ok(DegreeStatistics);
+    }
+
+    /**
+     * 学生人数统计
+     *
+     * @return
+     */
+    @GetMapping("/studentCountData")
+    public R StuCountStatistics() {
+        StudentStatistics studentStatistics = reportService.stuCountStatistics();
+        return R.ok(studentStatistics);
     }
 }

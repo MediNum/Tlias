@@ -12,12 +12,54 @@
         group by gender;
     </select>
 
-    <!-- 员工职位人数统计 -->
+    <!-- 员工部门人数统计 -->
     <select id="empJobStatistics" resultType="java.util.Map">
         select d.name      as name,
                count(e.id) as count
         from dept d
-                 left join emp e on e.dept_id = d.id
-        group by d.id, d.name
+                 left join
+             emp e
+             on e.dept_id = d.id
+        group by d.id,
+                 d.name
+        union all
+        select '未分配部门' as name,
+               count(*)     as count
+        from emp
+        where dept_id is null
+           or dept_id not in (select id from dept)
+    </select>
+
+    <!-- 学员学历统计 -->
+    <select id="stuDegreeDataStatistics" resultType="java.util.Map">
+        select count(*) as value,
+               case degree
+                   when 1 then '初中'
+                   when 2 then '高中'
+                   when 3 then '大专'
+                   when 4 then '本科'
+                   when 5 then '硕士'
+                   when 6 then '博士'
+                   else '未分配'
+                   end as name
+        from student
+        group by degree
+    </select>
+
+    <!-- 班级人数统计 -->
+    <select id="stuCountStatistics" resultType="java.util.Map">
+        select c.name as name, count(s.id) as count
+        from clazz c
+                 left join student s on c.id = s.clazz_id
+        group by c.id, c.name
+
+        union all
+
+        select '未分配班级' as name,
+               count(s.id)  as count
+        from student s
+        where clazz_id is null
+           or clazz_id not in (select id from clazz)
+        order by count asc
     </select>
 </mapper>

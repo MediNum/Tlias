@@ -91,7 +91,7 @@ public class EmpService implements IEmpService {
         if (ObjectUtil.isEmpty(emp.getImage())) {
             emp.setImage("https://storage.360buyimg.com/i.imageUpload/beadb5e434303031353234393235353235373736_big.jpg");
         }
-        log.info("==============>用户信息 {}" ,emp);
+
         log.info("===>用户信息{},用户的手机号{}", emp.getUsername(), emp.getPhone());
         // 判断员工用户名和手机号是否重复
         Emp empInfo = empMapper.selectByUsernameOrPhone(emp.getUsername(), emp.getPhone());
