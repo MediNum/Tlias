@@ -1,6 +1,7 @@
 package com.itheima.dto;
 
 import lombok.AllArgsConstructor;
+import lombok.Builder;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
@@ -8,6 +9,7 @@ import lombok.NoArgsConstructor;
  * 学生查询条件DTO
  */
 @Data
+@Builder
 @NoArgsConstructor
 @AllArgsConstructor
 public class StudentQueryDTO {

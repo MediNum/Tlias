@@ -24,3 +24,6 @@ aliyun:
   oss:
     bucket-name: ai-175  # 桶名称
     end-point: https://oss-cn-shanghai.aliyuncs.com # 路径节点地址
+jwt:
+  secret: jintiashigehaorizi # 加密密钥
+  exprired: 3600000 # 过期时间毫秒值
