@@ -1,7 +1,6 @@
 package com.itheima.filter;
 
 import jakarta.servlet.*;
-import jakarta.servlet.annotation.WebFilter;
 import lombok.extern.slf4j.Slf4j;
 
 import java.io.IOException;
@@ -11,7 +10,7 @@ import java.io.IOException;
  *
  */
 @Slf4j
-@WebFilter(urlPatterns = "/*") //配置过滤器要拦截的请求路径（ /* 表示拦截浏览器的所有请求 ）
+// @WebFilter(urlPatterns = "/*") //配置过滤器要拦截的请求路径（ /* 表示拦截浏览器的所有请求 ）
 public class MyFilter implements Filter {
 
     /**

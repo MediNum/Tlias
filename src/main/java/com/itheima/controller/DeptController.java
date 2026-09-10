@@ -25,7 +25,7 @@ public class DeptController {
      * 查询所有部门
      */
     @GetMapping
-    public R list() {
+    public R listAllDept() {
         List<Dept> deptList = deptService.list();
         return R.ok(deptList);
     }
@@ -43,7 +43,7 @@ public class DeptController {
      * 添加部门信息
      */
     @PostMapping
-    public R insert(@RequestBody Dept dept) {
+    public R saveDeptInfo(@RequestBody Dept dept) {
         deptService.insert(dept);
         return R.ok();
     }
@@ -62,7 +62,7 @@ public class DeptController {
      * 修改部门
      */
     @PutMapping
-    public R modifyById(@RequestBody Dept dept) {
+    public R updateById(@RequestBody Dept dept) {
         deptService.modifyById(dept);
         return R.ok();
     }

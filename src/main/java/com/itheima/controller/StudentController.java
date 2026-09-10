@@ -30,7 +30,7 @@ public class StudentController {
      * @return
      */
     @GetMapping
-    public R StudentList(StudentQueryDTO studentQueryDTO) {
+    public R listAllStu(StudentQueryDTO studentQueryDTO) {
         log.info("==>查询的学生信息 {} ", studentQueryDTO);
         PageR pageR = stuService.studentList(studentQueryDTO);
         return R.ok(pageR);
@@ -56,7 +56,7 @@ public class StudentController {
      * @return
      */
     @PostMapping
-    public R addStudent(@RequestBody Stu stu) {
+    public R saveStuInfo(@RequestBody Stu stu) {
         log.info("==>新增的学员的信息为 {}", stu);
         stuService.addStudentInfo(stu);
         return R.ok();
@@ -82,7 +82,7 @@ public class StudentController {
      * @return
      */
     @PutMapping
-    public R updateStu(@RequestBody Stu stu) {
+    public R updateStuInfo(@RequestBody Stu stu) {
         log.info("==>修改的学员的信息为 {} " , stu);
         stuService.updateStuInfo(stu);
         return R.ok();

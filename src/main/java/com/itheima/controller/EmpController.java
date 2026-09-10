@@ -28,7 +28,7 @@ public class EmpController {
      * @return
      */
     @GetMapping
-    public R pageSelect(EmpQueryDTO empQueryDTO) {
+    public R listAllEmp(EmpQueryDTO empQueryDTO) {
         log.info("分页查询员工信息，参数：{}", empQueryDTO);
         PageR empListInfo = empService.pageSelect(empQueryDTO);
         return R.ok(empListInfo);
@@ -54,7 +54,7 @@ public class EmpController {
      * @return
      */
     @PostMapping
-    public R addEmp(@RequestBody Emp emp) {
+    public R saveEmpInfo(@RequestBody Emp emp) {
         log.info("添加员工信息，参数：{}", emp);
         empService.addEmp(emp);
         return R.ok();

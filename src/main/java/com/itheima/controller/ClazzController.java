@@ -29,7 +29,7 @@ public class ClazzController {
      * @return
      */
     @GetMapping
-    public R clazzList(ClazzQueryDTO clazzQueryDTO) {
+    public R listAllClazz(ClazzQueryDTO clazzQueryDTO) {
         log.info("分页查询班级,查询条件：{}", clazzQueryDTO);
         PageR pageR = clazzService.clazzList(clazzQueryDTO);
         return R.ok(pageR);
@@ -55,7 +55,7 @@ public class ClazzController {
      * @return
      */
     @PostMapping
-    public R inert(@RequestBody Clazz clazz) {
+    public R saveClazzInfo(@RequestBody Clazz clazz) {
         log.info("添加班级信息,clazz:{}", clazz);
         clazzService.insertInfo(clazz);
         return R.ok();
@@ -81,7 +81,7 @@ public class ClazzController {
      * @return
      */
     @PutMapping
-    public R modifyById(@RequestBody Clazz clazz) {
+    public R updateByClazz(@RequestBody Clazz clazz) {
         log.info("修改班级信息,clazz:{}", clazz);
         clazzService.modifyById(clazz);
         return R.ok();
@@ -93,7 +93,7 @@ public class ClazzController {
      * @return
      */
     @GetMapping("/list")
-    public R clazzListAll() {
+    public R listAllClazzInfo() {
         List<Clazz> clazzListInfo = clazzService.clazzListAll();
         log.info("查询所有班级信息,clazzListInfo:{}", clazzListInfo);
          return R.ok(clazzListInfo);
