@@ -1,5 +1,6 @@
 package com.itheima.controller;
 
+import com.itheima.annotation.OperateLog;
 import com.itheima.entity.Dept;
 import com.itheima.service.IDeptService;
 import com.itheima.vo.R;
@@ -33,6 +34,7 @@ public class DeptController {
     /**
      * 删除部门
      */
+    @OperateLog
     @DeleteMapping
     public R deleteById(@RequestParam("id") Integer deptId) {
         deptService.deleteById(deptId);
@@ -42,6 +44,7 @@ public class DeptController {
     /**
      * 添加部门信息
      */
+    @OperateLog
     @PostMapping
     public R saveDeptInfo(@RequestBody Dept dept) {
         deptService.insert(dept);
@@ -61,6 +64,7 @@ public class DeptController {
     /**
      * 修改部门
      */
+    @OperateLog
     @PutMapping
     public R updateById(@RequestBody Dept dept) {
         deptService.modifyById(dept);

@@ -1,5 +1,6 @@
 package com.itheima.controller;
 
+import com.itheima.annotation.OperateLog;
 import com.itheima.dto.StudentQueryDTO;
 import com.itheima.entity.Stu;
 import com.itheima.service.IStuService;
@@ -42,6 +43,7 @@ public class StudentController {
      * @param ids
      * @return
      */
+    @OperateLog
     @DeleteMapping("/{ids}")
     public R deleteByIds(@PathVariable List<Integer> ids) {
         log.info("==> 删除学员信息 {}", ids);
@@ -55,6 +57,7 @@ public class StudentController {
      * @param stu
      * @return
      */
+    @OperateLog
     @PostMapping
     public R saveStuInfo(@RequestBody Stu stu) {
         log.info("==>新增的学员的信息为 {}", stu);
@@ -81,6 +84,7 @@ public class StudentController {
      * @param stu
      * @return
      */
+    @OperateLog
     @PutMapping
     public R updateStuInfo(@RequestBody Stu stu) {
         log.info("==>修改的学员的信息为 {} " , stu);
@@ -94,6 +98,7 @@ public class StudentController {
      * @param score
      * @return
      */
+    @OperateLog
     @PutMapping("/violation/{id}/{score}")
     public R updateStuScore(@PathVariable Integer id , @PathVariable String score) {
         log.info("==>获取到的id为 {} , 扣减的分数为 {}" , id , score);

@@ -1,0 +1,31 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.itheima.mapper.OperateLogMapper">
+    <!-- 查询操作日志 -->
+    <select id="logList" resultType="com.itheima.entity.OperateLog">
+        select o.id             as id,
+               o.operate_emp_id as operateEmpId,
+               o.operate_time   as operateTime,
+               o.class_name     as className,
+               o.method_name    as methodName,
+               o.method_params  as methodParams,
+               o.return_value   as returnValue,
+               o.cost_time      as costTime,
+               e.name           as operateEmpName
+        from operate_log o
+                 left join emp e on e.id = o.operate_emp_id
+        <where>
+        </where>
+    </select>
+
+    <!-- 添加操作日志 -->
+    <insert id="insert">
+        insert into operate_log (operate_emp_id, operate_time, class_name,
+                                 method_name, method_params, return_value, cost_time)
+        values (#{operateLogInfo.operateEmpId}, #{operateLogInfo.operateTime}, #{operateLogInfo.className},
+                #{operateLogInfo.methodName}, #{operateLogInfo.methodParams}, #{operateLogInfo.returnValue},
+                #{operateLogInfo.costTime})
+    </insert>
+</mapper>

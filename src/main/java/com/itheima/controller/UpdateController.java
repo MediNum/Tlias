@@ -1,5 +1,6 @@
 package com.itheima.controller;
 
+import com.itheima.annotation.OperateLog;
 import com.itheima.tool.AliYunOssStorageTool;
 import com.itheima.vo.R;
 import jakarta.annotation.Resource;
@@ -25,6 +26,7 @@ public class UpdateController {
     /**
      * 文件上传
      */
+    @OperateLog
     @PostMapping("/upload")
     public R uploadFile(@RequestParam("file") MultipartFile file) throws Exception {
         // 可以基于MultipartFile获取文件的原始名称,文件数据的字节数据,[上传到阿里云Oss]

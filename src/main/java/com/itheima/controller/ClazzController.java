@@ -1,5 +1,6 @@
 package com.itheima.controller;
 
+import com.itheima.annotation.OperateLog;
 import com.itheima.dto.ClazzQueryDTO;
 import com.itheima.entity.Clazz;
 import com.itheima.service.IClazzService;
@@ -41,6 +42,7 @@ public class ClazzController {
      * @param id
      * @return
      */
+    @OperateLog
     @DeleteMapping("/{id}")
     public R deleteById(@PathVariable Integer id) {
         log.info("删除班级信息,id:{}", id);
@@ -54,6 +56,7 @@ public class ClazzController {
      * @param clazz
      * @return
      */
+    @OperateLog
     @PostMapping
     public R saveClazzInfo(@RequestBody Clazz clazz) {
         log.info("添加班级信息,clazz:{}", clazz);
@@ -80,6 +83,7 @@ public class ClazzController {
      * @param clazz
      * @return
      */
+    @OperateLog
     @PutMapping
     public R updateByClazz(@RequestBody Clazz clazz) {
         log.info("修改班级信息,clazz:{}", clazz);

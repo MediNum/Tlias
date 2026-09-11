@@ -1,5 +1,6 @@
 package com.itheima.controller;
 
+import com.itheima.annotation.OperateLog;
 import com.itheima.dto.EmpQueryDTO;
 import com.itheima.entity.Emp;
 import com.itheima.service.IEmpService;
@@ -40,6 +41,7 @@ public class EmpController {
      * @param ids
      * @return
      */
+    @OperateLog
     @DeleteMapping
     public R deleteByIds(@RequestParam List<Integer> ids) {
         log.info("批量删除员工信息，参数：{}", ids);
@@ -53,6 +55,7 @@ public class EmpController {
      * @param emp
      * @return
      */
+    @OperateLog
     @PostMapping
     public R saveEmpInfo(@RequestBody Emp emp) {
         log.info("添加员工信息，参数：{}", emp);
@@ -79,6 +82,7 @@ public class EmpController {
      * @param emp
      * @return
      */
+    @OperateLog
     @PutMapping
     public R updateEmp(@RequestBody Emp emp) {
         log.info("更新员工信息，参数：{}", emp);

@@ -23,6 +23,12 @@ public class LoginController {
     @Resource
     private ILoginService loginService;
 
+    /**
+     * 员工登录
+     *
+     * @param loginQueryDTO
+     * @return
+     */
     @PostMapping
     public R login(@RequestBody LoginQueryDTO loginQueryDTO) {
         log.info("获取到的用户信息 {}" ,loginQueryDTO);

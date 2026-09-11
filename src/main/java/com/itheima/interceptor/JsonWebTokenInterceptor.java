@@ -1,6 +1,7 @@
 package com.itheima.interceptor;
 
 import cn.hutool.core.util.StrUtil;
+import com.itheima.tool.CurrentHolder;
 import com.itheima.tool.JwtTokenTool;
 import io.jsonwebtoken.Claims;
 import jakarta.annotation.Resource;
@@ -41,6 +42,8 @@ public class JsonWebTokenInterceptor implements HandlerInterceptor {
         // 如果if判断没有成功,说明token不是null值也不是"",则进行令牌的解析
         try {
             Claims claims = jwtTokenTool.parseJsonWebToken(jsonWebToken);
+            Integer empId = Integer.valueOf(claims.get("id").toString());
+            CurrentHolder.setCurrentLocalId(empId);
             log.info("拦截到本次访问路径为 {} 的请求,执行操作(放行,原因:Token 令牌存在,合法)", requestURI);
             // 如果parseJsonWebToken 没有抛出任何运行期异常,在说明令牌存在并且合法,放行
             return true;
