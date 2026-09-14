@@ -1,10 +1,12 @@
 package com.itheima.service.Impl;
 
 import com.itheima.entity.Dept;
+import com.itheima.exception.BusinessException;
 import com.itheima.mapper.DeptMapper;
 import com.itheima.service.IDeptService;
 import jakarta.annotation.Resource;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 import java.time.LocalDateTime;
 import java.util.List;
@@ -31,13 +33,21 @@ public class DeptService implements IDeptService {
     }
 
     /**
-     * 删除部门信息
+     * 删除部门信息,若部门内存在员工信息,有则提示,无则删除
      *
      * @param deptId
      */
     @Override
+    @Transactional(rollbackFor = Exception.class)
     public void deleteById(Integer deptId) {
-        deptMapper.deleteById(deptId);
+        if (deptId != null && deptId > 0) {
+            Integer countStu = deptMapper.countStu(deptId);
+            if (countStu != 0) {
+                throw new BusinessException("该部门无法删除 原因:部门内还存在 " + countStu + " 名员工信息");
+            } else {
+                deptMapper.deleteById(deptId);
+            }
+        }
     }
 
     /**

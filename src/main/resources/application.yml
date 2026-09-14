@@ -10,6 +10,9 @@ spring:
     multipart:
       max-file-size: 1MB # 单个文件最大上传大小
       max-request-size: 10MB # 请求最大上传大小
+    encoding:
+      charset: UTF-8
+      force: true
 mybatis:
   mapper-locations: classpath:mapper/*.xml # 映射文件
   configuration:

@@ -37,4 +37,12 @@ public interface DeptMapper {
      * 修改部门信息
      */
     void modifyById(@Param("dept") Dept dept);
+
+    /**
+     * 查询部门是否有员工存在
+     *
+     * @param deptId
+     * @return
+     */
+    Integer countStu(@Param("deptId") Integer deptId);
 }

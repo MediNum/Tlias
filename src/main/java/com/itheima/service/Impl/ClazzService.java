@@ -4,11 +4,13 @@ import com.github.pagehelper.PageHelper;
 import com.github.pagehelper.PageInfo;
 import com.itheima.dto.ClazzQueryDTO;
 import com.itheima.entity.Clazz;
+import com.itheima.exception.BusinessException;
 import com.itheima.mapper.ClazzMapper;
 import com.itheima.service.IClazzService;
 import com.itheima.vo.PageR;
 import jakarta.annotation.Resource;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 import java.time.LocalDateTime;
 import java.util.List;
@@ -43,15 +45,23 @@ public class ClazzService implements IClazzService {
     }
 
     /**
-     * 删除班级
+     * 删除班级,先查询班级内是否有学生,有则提示,无则删除
      *
      * @param id
      * @return
      */
     @Override
+    @Transactional(rollbackFor = Exception.class)
     public void deleteById(Integer id) {
-        if (id != null && id > 0)
-            clazzMapper.deleteById(id);
+
+        if (id != null && id > 0) {
+            Integer countStu = clazzMapper.countStu(id);
+            if (countStu != 0) {
+                throw new BusinessException("该班级无法删除 原因:班级内还存在 " + countStu + " 名学生信息");
+            } else {
+                clazzMapper.deleteById(id);
+            }
+        }
     }
 
     /**

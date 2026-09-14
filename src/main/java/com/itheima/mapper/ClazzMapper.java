@@ -52,4 +52,11 @@ public interface ClazzMapper {
      * @return
      */
     List<Clazz> clazzListAll();
+
+    /**
+     * 查询班级内是否还有学生
+     * @param id
+     * @return
+     */
+    Integer countStu(@Param("id") Integer id);
 }

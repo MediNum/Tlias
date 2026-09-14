@@ -3,7 +3,6 @@
         PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
         "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="com.itheima.mapper.ClazzMapper">
-
     <!-- 映射文件 -->
     <resultMap id="clazzMap" type="com.itheima.entity.Clazz">
         <id property="id" column="id"/>
@@ -20,10 +19,12 @@
 
     <!-- 查询班级列表 -->
     <select id="clazzList" resultMap="clazzMap">
-        select c.*, e.name as master_name from clazz c left join emp e on c.master_id = e.id
+        select c.*, e.name as master_name
+        from clazz c
+                 left join emp e on c.master_id = e.id
         <where>
             <if test="clazzQueryDTO.name != null and clazzQueryDTO.name != ''">
-                c.name like concat('%',#{clazzQueryDTO.name},'%')
+                c.name like concat('%', #{clazzQueryDTO.name}, '%')
             </if>
             <if test="clazzQueryDTO.begin != null">
                 and c.begin_date &gt;= #{clazzQueryDTO.begin}
@@ -36,37 +37,48 @@
 
     <!-- 删除班级 -->
     <delete id="deleteById">
-        delete from clazz where id = #{id}
+        delete
+        from clazz
+        where id = #{id}
     </delete>
 
     <!-- 添加班级信息 -->
     <insert id="insertInfo">
-        insert into clazz(name,room,begin_date,end_date,master_id,subject,create_time,update_time)
-        values (#{clazz.name},#{clazz.room},#{clazz.beginDate},#{clazz.endDate},#{clazz.masterId},#{clazz.subject},#{clazz.createTime},#{clazz.updateTime})
+        insert into clazz(name, room, begin_date, end_date, master_id, subject, create_time, update_time)
+        values (#{clazz.name}, #{clazz.room}, #{clazz.beginDate}, #{clazz.endDate}, #{clazz.masterId}, #{clazz.subject},
+                #{clazz.createTime}, #{clazz.updateTime})
     </insert>
 
     <!-- 根据Id查询班级信息 -->
     <select id="selectById" resultMap="clazzMap">
-        select * from clazz where id = #{id}
+        select *
+        from clazz
+        where id = #{id}
     </select>
 
     <!-- 修改班级信息 -->
     <update id="modifyById">
         update clazz
-        set name = #{clazz.name},
-        room = #{clazz.room},
-        begin_date = #{clazz.beginDate},
-        end_date = #{clazz.endDate},
-        master_id = #{clazz.masterId},
-        subject = #{clazz.subject},
-        update_time = #{clazz.updateTime}
+        set name        = #{clazz.name},
+            room        = #{clazz.room},
+            begin_date  = #{clazz.beginDate},
+            end_date    = #{clazz.endDate},
+            master_id   = #{clazz.masterId},
+            subject     = #{clazz.subject},
+            update_time = #{clazz.updateTime}
         where id = #{clazz.id}
     </update>
 
     <select id="clazzListAll" resultMap="clazzMap">
-        select
-            id , name
-        from
-            clazz
+        select id,
+               name
+        from clazz
+    </select>
+
+    <!-- 查询班级内是否还有学生 -->
+    <select id="countStu" resultType="java.lang.Integer">
+        select count(*)
+        from student
+        where clazz_id = #{id}
     </select>
 </mapper>
