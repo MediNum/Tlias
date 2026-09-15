@@ -2,6 +2,7 @@ package com.itheima.service.Impl;
 
 import cn.hutool.core.collection.CollUtil;
 import cn.hutool.core.util.ObjectUtil;
+import cn.hutool.core.util.StrUtil;
 import com.github.pagehelper.PageHelper;
 import com.github.pagehelper.PageInfo;
 import com.itheima.dto.EmpQueryDTO;
@@ -11,6 +12,7 @@ import com.itheima.exception.BusinessException;
 import com.itheima.mapper.EmpMapper;
 import com.itheima.service.IEmpExprService;
 import com.itheima.service.IEmpService;
+import com.itheima.tool.AliYunOssStorageTool;
 import com.itheima.vo.PageR;
 import jakarta.annotation.Resource;
 import lombok.extern.slf4j.Slf4j;
@@ -34,6 +36,10 @@ public class EmpService implements IEmpService {
     // 注入员工工作经历业务类
     @Resource
     private IEmpExprService empExprService;
+
+    // 注入Oss工具类
+    @Resource
+    private AliYunOssStorageTool aliYunOssStorageTool;
 
 
     /**
@@ -63,8 +69,25 @@ public class EmpService implements IEmpService {
      * @param ids
      */
     @Override
+    @Transactional(rollbackFor = Exception.class)
     public void deleteByIds(List<Integer> ids) {
+
         if (ids != null && !ids.isEmpty()) {
+            // 获取删除员工头像信息
+            List<String> ListImage = empMapper.selectImgById(ids);
+            ListImage.stream()
+                    .filter(StrUtil::isNotBlank)
+                    .filter(aliYunOssStorageTool::isOssFile)
+                    .forEach(image -> {
+                        try {
+                            aliYunOssStorageTool.deleteFile(image);
+                            log.info("头像删除成功!");
+                        } catch (Exception e) {
+                            log.error("删除头像失败,image:{}", image, e);
+                            throw new BusinessException("头像信息删除失败");
+                        }
+                    });
+            ;
             // 批量删除员工信息
             empMapper.deleteByIds(ids);
             // 同时批量删除员工工作经历信息

@@ -129,4 +129,12 @@
     <select id="selectByUsernameOrPhone" resultType="com.itheima.entity.Emp">
         select id,username,phone from emp where username = #{username} or phone = #{phone} limit 1
     </select>
+    <!-- 获取删除员工头像信息 -->
+    <select id="selectImgById" resultType="java.lang.String">
+        select image
+        from emp where id in
+        <foreach collection="ids" item="id" open="(" separator="," close=")">
+            #{id}
+        </foreach>
+    </select>
 </mapper>

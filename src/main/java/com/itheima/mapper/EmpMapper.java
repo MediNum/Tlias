@@ -59,8 +59,17 @@ public interface EmpMapper {
 
     /**
      * 根据用户名查询员工信息是否重复
+     *
      * @param username
      * @return
      */
-    Emp selectByUsernameOrPhone(@Param("username") String username ,@Param("phone") String phone);
+    Emp selectByUsernameOrPhone(@Param("username") String username, @Param("phone") String phone);
+
+    /**
+     * 获取删除员工头像信息
+     *
+     * @param ids
+     * @return
+     */
+    List<String> selectImgById(@Param("ids") List<Integer> ids);
 }

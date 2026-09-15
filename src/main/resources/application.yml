@@ -13,6 +13,8 @@ spring:
     encoding:
       charset: UTF-8
       force: true
+  mvc:
+    log-request-details: true
 mybatis:
   mapper-locations: classpath:mapper/*.xml # 映射文件
   configuration:
