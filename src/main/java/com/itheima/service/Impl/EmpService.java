@@ -160,6 +160,21 @@ public class EmpService implements IEmpService {
     @Override
     @Transactional(rollbackFor = Exception.class)
     public void updateEmp(Emp emp) {
+        // 用户更新头像时删除Bucket中原始头像
+        Integer empId = emp.getId();
+        List<Integer> ids = List.of(empId);
+        List<String> ImageInfo = empMapper.selectImgById(ids);
+        ImageInfo.stream()
+                .filter(StrUtil::isNotBlank)
+                .filter(aliYunOssStorageTool::isOssFile)
+                .forEach(image -> {
+                    try {
+                        aliYunOssStorageTool.deleteFile(image);
+                    } catch (Exception e) {
+                        log.info("删除头像失败,image:{} ", image, e);
+                        throw new BusinessException("原始头像删除失败!");
+                    }
+                });
         // 更新修改时间
         emp.setUpdateTime(LocalDateTime.now());
         empMapper.updateById(emp);
