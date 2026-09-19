@@ -5,6 +5,7 @@ import com.itheima.entity.Emp;
 import org.apache.ibatis.annotations.Mapper;
 import org.apache.ibatis.annotations.Param;
 
+import java.time.LocalDateTime;
 import java.util.List;
 
 /**
@@ -72,4 +73,21 @@ public interface EmpMapper {
      * @return
      */
     List<String> selectImgById(@Param("ids") List<Integer> ids);
+
+    /**
+     * 根据员工Id查询员工密码
+     *
+     * @param id
+     * @return
+     */
+    String selectPasswordById(@Param("id") Integer id);
+
+    /**
+     * 根据员工Id修改员工密码
+     *
+     * @param id
+     * @param password
+     * @param updateTime
+     */
+    void updatePassword(@Param("id") Integer id, @Param("password") String password, @Param("updateTime") LocalDateTime updateTime);
 }

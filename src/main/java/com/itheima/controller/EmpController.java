@@ -2,6 +2,7 @@ package com.itheima.controller;
 
 import com.itheima.annotation.OperateLog;
 import com.itheima.dto.EmpQueryDTO;
+import com.itheima.dto.PasswordQueryDTO;
 import com.itheima.entity.Emp;
 import com.itheima.service.IEmpService;
 import com.itheima.vo.PageR;
@@ -100,5 +101,18 @@ public class EmpController {
         log.info("查询所有员工信息");
         List<Emp> empList = empService.selectAllList();
         return R.ok(empList);
+    }
+
+    /**
+     * 修改当前登录用户的密码
+     *
+     * @param passwordQueryDTO
+     * @return
+     */
+    @PutMapping("/password")
+    public R updatePassword(@RequestBody PasswordQueryDTO passwordQueryDTO) {
+        log.info("修改当前登录用户的密码");
+        empService.updatePassword(passwordQueryDTO);
+        return R.ok();
     }
 }

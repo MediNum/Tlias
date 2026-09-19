@@ -1,6 +1,7 @@
 package com.itheima.service;
 
 import com.itheima.dto.EmpQueryDTO;
+import com.itheima.dto.PasswordQueryDTO;
 import com.itheima.entity.Emp;
 import com.itheima.vo.PageR;
 
@@ -54,4 +55,11 @@ public interface IEmpService {
      * @return
      */
     List<Emp> selectAllList();
+
+    /**
+     * 修改当前登录用户的密码
+     *
+     * @param passwordQueryDTO
+     */
+    void updatePassword(PasswordQueryDTO passwordQueryDTO);
 }

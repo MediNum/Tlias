@@ -137,4 +137,19 @@
             #{id}
         </foreach>
     </select>
+
+    <!-- 根据员工Id查询员工密码 -->
+    <select id="selectPasswordById" resultType="java.lang.String">
+        select password
+        from emp
+        where id = #{id}
+    </select>
+
+    <!-- 根据员工Id修改员工密码 -->
+    <update id="updatePassword">
+        update emp
+        set password    = #{password},
+            update_time = #{updateTime}
+        where id = #{id}
+    </update>
 </mapper>

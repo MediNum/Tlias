@@ -6,6 +6,7 @@ import cn.hutool.core.util.StrUtil;
 import com.github.pagehelper.PageHelper;
 import com.github.pagehelper.PageInfo;
 import com.itheima.dto.EmpQueryDTO;
+import com.itheima.dto.PasswordQueryDTO;
 import com.itheima.entity.Emp;
 import com.itheima.entity.EmpExpr;
 import com.itheima.exception.BusinessException;
@@ -13,6 +14,7 @@ import com.itheima.mapper.EmpMapper;
 import com.itheima.service.IEmpExprService;
 import com.itheima.service.IEmpService;
 import com.itheima.tool.AliYunOssStorageTool;
+import com.itheima.tool.CurrentHolder;
 import com.itheima.vo.PageR;
 import jakarta.annotation.Resource;
 import lombok.extern.slf4j.Slf4j;
@@ -196,5 +198,35 @@ public class EmpService implements IEmpService {
     @Override
     public List<Emp> selectAllList() {
         return empMapper.selectAllList();
+    }
+
+    /**
+     * 修改当前登录用户的密码
+     *
+     * @param passwordQueryDTO
+     */
+    @Override
+    public void updatePassword(PasswordQueryDTO passwordQueryDTO) {
+        String oldPassword = passwordQueryDTO.getOldPassword();
+        String newPassword = passwordQueryDTO.getNewPassword();
+
+        // 校验原密码和新密码是否为空
+        if (StrUtil.isBlank(oldPassword) || StrUtil.isBlank(newPassword)) {
+            throw new BusinessException("请输入原密码和新密码!");
+        }
+        // 校验新密码长度是否满足6-20位要求
+        if (newPassword.length() < 6 || newPassword.length() > 20) {
+            throw new BusinessException("新密码长度必须为6-20位!");
+        }
+        // 从ThreadLocal中获取当前登录用户的Id(由拦截器解析Token后存入)
+        Integer empId = CurrentHolder.getCurrentId();
+        // 查询当前登录用户的原始密码
+        String dbPassword = empMapper.selectPasswordById(empId);
+        // 校验原密码是否正确
+        if (!StrUtil.equals(oldPassword, dbPassword)) {
+            throw new BusinessException("原密码错误");
+        }
+        // 修改密码,同时刷新修改时间
+        empMapper.updatePassword(empId, newPassword, LocalDateTime.now());
     }
 }
